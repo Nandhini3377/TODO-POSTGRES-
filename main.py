@@ -1,6 +1,4 @@
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import engine, Base, SessionLocal
@@ -18,11 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
 @app.get("/")
 def read_root():
-    return FileResponse("static/index.html")
+    return {"message": "Todo API is running"}
 
 # Dependency: Get database session for each request
 def get_db():
